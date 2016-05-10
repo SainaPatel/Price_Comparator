@@ -59,7 +59,7 @@ class Users(Resource):
                     return {"status": "ok"} 
             return {"response": "ERROR no username"}
 
-    def put(self, username):
+    def put(self):
         data = []
         datadic = request.data
         data = json.loads(datadic)
@@ -81,7 +81,7 @@ class Users(Resource):
                     return {"response": "User doesn't exist."}
             return {"response": "ERROR no username"}
 
-    def delete(self,username):
+    def delete(self):
         data = []
         datadic = request.data
         data = json.loads(datadic)
@@ -89,12 +89,12 @@ class Users(Resource):
         if not data:
             data = {"response": "ERROR"}
             return jsonify(data)
-        
+	
+	username = data.get('user_name')
+	sem3id = data.get('sem3id')        
         result = mongo.db.user_details.find_one({"user_name": username})
         wishlist = result['wish_list']
         new_wishlist = []
-        username = data.get('user_name')
-        sem3id = data.get('sem3id')
         item_flag = 0
         
         print "I'm here in delete---", username
